@@ -1,0 +1,9 @@
+@charset "EUC-KR";
+
+body{
+	margin : 0;
+}
+
+.screen-top{
+	margin:0;
+}

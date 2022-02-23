@@ -1,0 +1,35 @@
+/**
+ * 
+ */
+ 
+ $(document).ready(function(){
+			$('.first-btn').click(function(){document.reload()});
+	
+			var page_=1;
+			
+			function loadArticles(){		
+				$.ajax({
+					url : "/getArticles",
+					data : {page : page_},
+					method : "get",
+					async: false, 
+					success : function(data){
+	
+					}
+				});
+			}
+		
+	$('.next-btn').click(function(){
+		page_+=1;
+		loadArticles();
+	});
+	
+	$('.prev-btn').click(function(){
+		page_-=1;
+		loadArticles();
+	});
+	
+	$('.page-btn').click(function(){
+		if(page==1) $('.first-btn, .prev-btn').css('display',none);
+		else $('.first-btn, .prev-btn').css('display','block');
+	});

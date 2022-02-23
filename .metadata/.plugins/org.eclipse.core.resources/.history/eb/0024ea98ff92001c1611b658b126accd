@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+ 
+ $(document).ready(function(){
+	 $(".submit").click(function(){
+	  $('.alert').css('display','none');
+	  
+	  if($("#username").val()==''){
+	    $('#username_empty').css('display','block');
+	    return false;
+	  }
+	  else if($("#pw").val()==''){
+	    $('#pw_empty').css('display','block');
+	    return false;
+	  }
+	});
+});

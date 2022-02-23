@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+ 
+ $(document).ready(function(){
+	$('.first-btn').click(function(){document.reload()});
+	
+});

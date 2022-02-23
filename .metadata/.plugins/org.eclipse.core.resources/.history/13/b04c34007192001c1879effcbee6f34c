@@ -1,0 +1,9 @@
+$(document).ready(function(){
+		$('.signin-btn').click(function(){
+			$('.signin-popup').css('display','block');
+		});
+		
+		 $('.signup-btn').click(function(){
+			$('.signup-popup').css('display','block');
+		});
+});

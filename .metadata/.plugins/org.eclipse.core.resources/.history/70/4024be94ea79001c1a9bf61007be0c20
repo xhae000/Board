@@ -1,0 +1,13 @@
+package com.example.demo.Mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import com.example.demo.DTO.TestDTO;
+
+@Mapper
+public interface TestMapper {
+	
+	  @Select("select * from test_table where id=1")
+	  TestDTO selectBoardList();
+}

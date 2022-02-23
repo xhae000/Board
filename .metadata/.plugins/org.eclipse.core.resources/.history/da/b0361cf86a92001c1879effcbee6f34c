@@ -1,0 +1,45 @@
+@charset "EUC-KR";
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+
+body{
+  background-color:#F3F3F3;
+   margin:0;
+  font-family: 'Noto Sans KR', sans-serif;
+  padding-top:58px;
+  
+}
+
+.screen-top{
+  position:fixed;
+  top:0;left:0;right:0;
+  padding:8px 15px 8px 15px;
+  margin:0;
+  border-bottom: 0.3px solid #b0b0b0;
+  display:flex;
+  justify-content:space-between;
+  background-color:#ffffff;
+}
+
+.title{
+    font-family: 'Anton', sans-serif;  
+    display:inline-block;
+    font-size:24px;
+    
+}
+
+.title:hover{
+  cursor:pointer;
+}
+
+
+.login{
+  background-color:skyblue;
+  position:fixed;
+  height:470px;
+  width:410px;
+  margin:0 auto;
+  top:23%;bottom:23%;left:0;right:0;
+   
+}

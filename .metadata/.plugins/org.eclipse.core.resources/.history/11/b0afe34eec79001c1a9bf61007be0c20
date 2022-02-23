@@ -1,0 +1,6 @@
+@charset "EUC-KR";
+
+body{
+	margin : 0;
+	background-color:skyblue;
+}

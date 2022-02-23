@@ -1,0 +1,17 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="/signupProcess" method="post">
+		<input name="username" placeholder="아이디"/>
+		<input name="pw" placeholder="비밀번호" />
+		<input name="nickname" placeholder="닉네임" />
+		<button type="submit">완료</button>
+	</form>
+</body>
+</html>

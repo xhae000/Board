@@ -1,0 +1,15 @@
+package com.example.demo.DTO;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class TestDTO {
+	int id;
+	String name;
+	
+	public String toString(TestDTO dto) {
+		return dto.id+" "+dto.name;
+	}
+}
