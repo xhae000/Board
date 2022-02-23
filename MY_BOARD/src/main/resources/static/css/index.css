@@ -7,10 +7,7 @@ body{
   background-color:#F3F3F3;
    margin:0;
   font-family: 'Noto Sans KR', sans-serif;
-  
 }
-
-
 .wrap-content{
   background-color:#ffffff;
   height:auto;
@@ -20,6 +17,11 @@ body{
   text-align:center;
   vertical-align:top;
 }
+.screen-middle{
+	
+	text-align:center;
+}
+
 .screen-side{
   display:inline-block;
   width:21%;
@@ -145,4 +147,86 @@ body{
 .write-btn:hover{cursor:pointer;
   background-color:#1454CD;
   color:#ffffff; 
+}
+
+
+.signin-btn{
+    margin-right:4px;
+    margin-left:4px;
+    margin-bottom:4px;
+    margin-top:4px;
+    padding: 2px 0px 2px 0px;
+    border-radius:6px;
+    border:0.2px solid #D786D4;
+    transition:0.3s;
+
+}
+
+.signin-btn:hover{
+  background-color:#D786D4;
+  color:white;
+  cursor:pointer;
+}
+
+.signup-btn:hover{
+  background-color:#C57A7A;
+  color:white;
+  cursor:pointer;
+  
+}
+
+.signout-btn:hover{
+	background-color:red;
+	color:white;
+	cursor:pointer;
+}
+
+.signup-btn{
+      margin-right:4px;
+    margin-left:4px;
+    padding: 2px 0px 2px 0px;
+    border-radius:6px;
+    border:0.2px solid #C57A7A;
+    transition:0.3s;
+
+}
+
+.signout-btn{
+	    margin-right:4px;
+    margin-left:4px;
+    margin-bottom:4px;
+    margin-top:4px;
+    padding: 2px 0px 2px 0px;
+    border-radius:6px;
+    border:0.2px solid red;
+    transition:0.3s;
+}
+.screen-bottom{
+  text-align:center;
+  display:flex;
+  justify-content:space-between;
+  margin-top:5px;
+  margin-bottom:22px;
+}
+
+.page-btn{
+   display:inline-block;
+   cursor:pointer;
+   border:0.1px solid #1969FF;
+   font-size:17px;
+    color:#1969FF;
+  padding:6px 14px 6px 14px;
+  border-radius:7px;
+  background-color:#ffffff;
+}
+
+.bottom-cont{	
+	display:inline-block; width:55%;
+}
+
+#prev-btn{
+	display:none;
+}
+#first-btn{
+	display:none;
 }

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>index</title>
+<title>ShareALL</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <link href="/css/index.css" rel='stylesheet' />
 <link href="/css/common.css?after" rel="stylesheet" />

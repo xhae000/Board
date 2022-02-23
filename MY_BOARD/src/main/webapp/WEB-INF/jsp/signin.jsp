@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>SIGN IN</title>
 
 <link href="/css/common.css" rel="stylesheet" />
 <link href="/css/signin.css" rel="stylesheet" />

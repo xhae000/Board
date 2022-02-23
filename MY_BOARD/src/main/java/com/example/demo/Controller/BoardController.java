@@ -1,6 +1,9 @@
 package com.example.demo.Controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Common.Paging;
 import com.example.demo.Mapper.BoardMapper;
@@ -42,12 +47,20 @@ public class BoardController {
 		return "/write";
 	}
 	
-	@RequestMapping(value = "/write", method=RequestMethod.POST)
-	public String writeProcess() {
+	@RequestMapping(value = "/writeProccess", method=RequestMethod.POST)
+	public String writeProcess(@ModelAttribute("file")MultipartFile file,@ModelAttribute("title") String title,
+			@ModelAttribute("description")String des) throws IllegalStateException, IOException {
+		
+		//validation 
+
+		if(!file.isEmpty()) {
+			File newFile = new File(UUID.randomUUID().toString()+"_"+file.getOriginalFilename());
+				file.transferTo(newFile);
+		}		
+		
 		
 		return "redirect:/"; //쓴 글로 이동하게
 	}
 
 }
 
-//아니이거왜이래aaaa dddccaa
