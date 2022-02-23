@@ -50,4 +50,4 @@ public class BoardController {
 
 }
 
-//아니이거왜이래aaaa ddd
+//아니이거왜이래aaaa dddcc
