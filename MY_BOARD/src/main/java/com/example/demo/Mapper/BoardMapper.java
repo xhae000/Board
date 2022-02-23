@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.DTO.Article;
 
@@ -17,9 +18,11 @@ public interface BoardMapper {
 	  		+ "#{article.description}, #{article.category_id})")
 	  Boolean createArticle(@Param("article") Article article);
 	  
-	  @Select("select * from article")
-	  List<Article> getArticleLists();
+	  @Select("select * from article limit #{start_num},30")
+	  List<Article> getArticleLists(@Param("start_num")int start_num);
 	  
 	  @Select("select COUNT(*) from article")
 	  int getArticleCount();
+
+	  
 }

@@ -12,6 +12,7 @@ public class Article {
 	Short Category_id;
 	int likes;
 	int see;
+	String writer_image;
 	
 	public int getId() {
 		return id;
@@ -66,6 +67,12 @@ public class Article {
 	}
 	public void setSee(int see) {
 		this.see = see;
+	}
+	public String getWriter_image() {
+		return writer_image;
+	}
+	public void setWriter_image(String writer_image) {
+		this.writer_image = writer_image;
 	}
 	
 	
