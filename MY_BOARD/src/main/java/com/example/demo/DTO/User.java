@@ -6,6 +6,7 @@ public class User {
 	String pw;
 	String nickname;
 	String role;
+	String image;
 	
 	public int getId() {
 		return id;
@@ -37,6 +38,12 @@ public class User {
 	}
 	public void setRole(String role) {
 		this.role = role;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

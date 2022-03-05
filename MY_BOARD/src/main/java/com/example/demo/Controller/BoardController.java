@@ -17,13 +17,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Common.Paging;
+import com.example.demo.DTO.Article;
+import com.example.demo.DTO.User;
 import com.example.demo.Mapper.BoardMapper;
+import com.example.demo.Mapper.UserMapper;
 
 @Controller
 public class BoardController {
 
 	@Autowired
 	private BoardMapper boardMapper;
+	@Autowired
+	private UserMapper userMapper;
     private static final Logger LOGGER  = LogManager.getLogger(BoardController.class);
 	
 	@RequestMapping("/")
@@ -38,7 +43,6 @@ public class BoardController {
 		model.addAttribute("keword","woojin");	
 		model.addAttribute("articles",boardMapper.getArticleLists(0));
 		
-				
 		return "/index";
 	}
 
@@ -49,15 +53,25 @@ public class BoardController {
 	
 	@RequestMapping(value = "/writeProccess", method=RequestMethod.POST)
 	public String writeProcess(@ModelAttribute("file")MultipartFile file,@ModelAttribute("title") String title,
-			@ModelAttribute("description")String des) throws IllegalStateException, IOException {
+			@ModelAttribute("description")String des, Principal pri) throws IllegalStateException, IOException {
+		String filename = "no-image";
 		
-		//validation 
-
+		if(title.length()>20||des.length()>1100)
+			return "redirect:/";
+		
 		if(!file.isEmpty()) {
-			File newFile = new File(UUID.randomUUID().toString()+"_"+file.getOriginalFilename());
-				file.transferTo(newFile);
+			filename = UUID.randomUUID().toString()+"_"+file.getOriginalFilename();
+			File newFile = new File(filename);
+			file.transferTo(newFile);
+			filename="/image/"+filename;
 		}		
 		
+		User user = userMapper.getUserInfo(pri.getName());
+		Article article =new Article(user.getId(),user.getNickname(),
+				title,des,user.getImage(),filename);
+		
+		
+		boardMapper.createArticle(article);
 		
 		return "redirect:/"; //쓴 글로 이동하게
 	}

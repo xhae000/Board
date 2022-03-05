@@ -39,7 +39,7 @@
         <div id="pw_empty" class="alert">
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <div class="alert" style="text-align:center;">
+        <div class="alert" style="text-align:center;margin-left:0">
         	${msg}
         </div>
         <input type="submit" value="SIGN IN!" class="submit" />

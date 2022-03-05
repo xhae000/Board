@@ -3,9 +3,8 @@ package com.example.demo.DTO;
 public class Article {
 	
 	int id;
-	Short writer_id;
+	Integer writer_id;
 	String nickname;
-
 	String title;
 	String description;
 	String uploadtime;
@@ -13,6 +12,16 @@ public class Article {
 	int likes;
 	int see;
 	String writer_image;
+	String image;
+	
+	public Article(Integer writer_id,String nickname,String title,String description,String writer_image,String image) {
+		this.writer_id=writer_id;
+		this.nickname=nickname;
+		this.title=title;
+		this.description=description;
+		this.writer_image=writer_image;
+		this.image = image;
+	}
 	
 	public int getId() {
 		return id;
@@ -20,10 +29,10 @@ public class Article {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Short getWriter_id() {
+	public Integer getWriter_id() {
 		return writer_id;
 	}
-	public void setWriter_id(Short writer_id) {
+	public void setWriter_id(Integer writer_id) {
 		this.writer_id = writer_id;
 	}
 	public String getNickname() {
@@ -73,6 +82,14 @@ public class Article {
 	}
 	public void setWriter_image(String writer_image) {
 		this.writer_image = writer_image;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	

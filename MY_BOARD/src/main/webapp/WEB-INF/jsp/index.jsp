@@ -62,13 +62,19 @@
 	    var dateD = nowDate.getDate()-date.getDate();
 	    var hourD = nowDate.getHours()-date.getHours();
 	    var minuteD = nowDate.getMinutes()-date.getMinutes();
-	
-	    if(yearD==0) return String(date.getMonth()+1)+"월 "+String(date.getDate())+"일";
-	    else if(monthD==0&&dateD==0) {
+		
+	    if(yearD==0&&monthD==0&&dateD==0&&hourD==0) {
+	    	if(minuteD==0) return "방금 전";
+	    	else
+	    		return String(minuteD)+"분 전";
+	    }
+	    else if(yearD==0&&monthD==0&&dateD==0) {
 	        if(minuteD>0) return String(hourD)+"시간 전";
 	        else return String(hourD-1)+"시간 전";
 	    }
-	    else if(hourD==0) return String(minuteD)+"분 전";
+	    else if(yearD==0 || monthD<=0) return String(date.getMonth()+1)+"월 "+String(date.getDate())+"일";
+	    else return String(yearD)+"년 전"
+	   
 	};
 </script>
 
@@ -107,7 +113,7 @@
 
     		</div>
     	</div>
-    
+   
     <div class="article-zone">
 	<c:forEach var="i" items="${articles}" varStatus="status">
 		<div class="articleBox">

@@ -74,3 +74,19 @@
 input,textarea:focus{
   outline:none;
 }
+
+.img-info{
+	display:none
+}
+
+.delete-img{
+	display:inline-block;
+	text-align:center;
+	background-color:#F05959;
+	color: #ffffff;
+	margin-left:3.1px;
+	width:25px;
+	height:25px;
+	border-radius:55%;
+	cursor:pointer;
+}

@@ -24,7 +24,7 @@ public class AjaxController {
 	@RequestMapping("/isAvailableUsername")
 	@ResponseBody
 	public String isAvailableUsername(@RequestParam String username) {
-		return userMapper.isDuplicate(username)==null?"available":"using";
+		return userMapper.getUserId(username)==null?"available":"using";
 	}
 	
 	@RequestMapping("/getArticles")

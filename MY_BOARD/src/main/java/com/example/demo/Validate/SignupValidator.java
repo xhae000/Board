@@ -33,7 +33,7 @@ public class SignupValidator {
 		else if(username.length()>32||checkPw.length()>32||nickname.length()>8) 
 			return false;
 		
-		else if(userMapper.isDuplicate(username) != null) 
+		else if(userMapper.getUserId(username) != null) 
 			return false;
 		
 		else return true;

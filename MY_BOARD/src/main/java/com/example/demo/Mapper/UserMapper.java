@@ -16,5 +16,10 @@ public interface UserMapper {
 	boolean createUser(@Param("user")User user);
 	
 	@Select("select id from user where username =#{username}")
-	Integer isDuplicate(@Param("username") String username);
+	Integer getUserId(@Param("username") String username);
+	
+	@Select("select nickname from user where username=#{username}")
+	String getNickname(@Param("username")String username);
+	
+
 }
