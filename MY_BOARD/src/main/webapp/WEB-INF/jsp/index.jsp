@@ -56,25 +56,21 @@
 	function getTime(time){	
 	    var date = new Date(String(time));
 	    var nowDate = new Date();
-	
-	    var yearD = nowDate.getFullYear()-date.getFullYear();
-	    var monthD = nowDate.getMonth()-date.getMonth();
-	    var dateD = nowDate.getDate()-date.getDate();
-	    var hourD = nowDate.getHours()-date.getHours();
-	    var minuteD = nowDate.getMinutes()-date.getMinutes();
 		
-	    if(yearD==0&&monthD==0&&dateD==0&&hourD==0) {
-	    	if(minuteD==0) return "방금 전";
-	    	else
-	    		return String(minuteD)+"분 전";
-	    }
-	    else if(yearD==0&&monthD==0&&dateD==0) {
-	        if(minuteD>0) return String(hourD)+"시간 전";
-	        else return String(hourD-1)+"시간 전";
-	    }
-	    else if(yearD==0 || monthD<=0) return String(date.getMonth()+1)+"월 "+String(date.getDate())+"일";
-	    else return String(yearD)+"년 전"
-	   
+	    const sub = (nowDate - date)/1000/60 //분 단위
+	    
+	    if(sub<1) //1분 미만
+	   		return "방금 전";
+	    else if(sub<60) //1시간 미만
+	    	return Math.floor(sub)+"분 전";
+	    else if(sub<60*24) //1일 미만
+	    	return Math.floor(sub/60)+"시간 전";
+	    else if(sub<60*24*30) //1달 미만(30일로)
+	    	return Math.floor(sub/60/24)+"일 전";
+	    else if(sub<60/24/365) //1년 미만
+	    	return Math.floor(sub/60/24/30)+"개월 전";
+	    else 
+	    	return Math.floor(sub/60/24/365)+"년 전";
 	};
 </script>
 
@@ -119,11 +115,11 @@
 		<div class="articleBox">
       	  <div class="article-top">
           	<div class="titleBox">
-           	 <div class="article-title">
+           	 <div data-id="${i.id}" class="article-title">
              	${i.title}
            	 </div>
             </div>
-            <div class="writerBox">
+            <div  data-writer-id="${i.writer_id}" class="writerBox">
            	 	<img class="writerImage" src="${i.writer_image}"
              	   />
            	 	<span class="writerNickname">

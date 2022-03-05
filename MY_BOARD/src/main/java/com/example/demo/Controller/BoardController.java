@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -76,5 +77,13 @@ public class BoardController {
 		return "redirect:/"; //쓴 글로 이동하게
 	}
 
+	@RequestMapping(value="/article/{id}")
+	public String article(@PathVariable int id,Model model) {
+		Article article = boardMapper.getArticle(id);
+		model.addAttribute("article",article);
+		boardMapper.plusSee(id);
+		return "/article";
+	}
+	
 }
 

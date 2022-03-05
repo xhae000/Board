@@ -21,11 +21,11 @@
 						 		"<div class='articleBox'>"+
 						      	  "<div class='article-top'>"+
 						          	"<div class='titleBox'>"+
-						           	"<div class='article-title'>"+
+						           	"<div data-id='"+i.id+"' class='article-title'>"+
 						             	i.title+
 						           	 "</div>"+
 						            "</div>"+
-						            "<div class='writerBox'>"+
+						            "<div data-writer-id='"+i.writer_id+"'class='writerBox'>"+
 						           	 	"<img class='writerImage' src="+i.writer_image+
 						             	 "  />"+
 						           	 	"<span class='writerNickname'> "
@@ -70,6 +70,10 @@
 	   if(page_==1) $('#first-btn, #prev-btn').css('display','none');
 		loadArticles();
 	});
-	
-
+	$('body').on('click','.article-title',function(){ 
+			location.href  = "/article/"+$(this).data('id');
+	});
+	$('body').on('click','.writerBox',function(){
+			location.href  = "/user/"+$(this).data('writer-id');
+	});
 });	

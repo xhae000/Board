@@ -23,6 +23,11 @@ public interface BoardMapper {
 	  
 	  @Select("select COUNT(*) from article")
 	  int getArticleCount();
-
+	  
+	  @Select("select * from article where id = #{id}")
+	  Article getArticle(@Param("id") int id);
+	  
+	  @Update("update article set see=see+1 where id=#{id}")
+	  Boolean plusSee(@Param("id") int id);
 	  
 }
