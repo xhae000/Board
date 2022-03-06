@@ -1,0 +1,158 @@
+@charset "EUC-KR";
+
+.screen-middle{
+	margin-top:11px;
+	display:inline-block;
+	background-color:#ffffff;
+	width:48%;
+	min-height:540px;
+	min-width:700px;
+  padding:27px 21px 12px 21px;
+  border-radius:1.1%;
+  border:0.2px solid #c5c5c5;
+}
+.title-zone{
+  text-align:left;
+  font-size:23px;
+  word-break:break-all;
+}
+
+.writer-zone{
+   text-align:left;
+}
+
+.writer-name{
+  display:inline-block;
+}
+.info-zone{
+	border-top:0.2px solid #c5c5c5;
+  margin-top:6px;
+  padding-top:6px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.info-right{
+  color:#555555;
+}
+
+.see,.article-time{
+  display:inline-block;
+  padding-right: 10.4px;
+  padding-left:4.1px;
+  border-right:0.2px solid #c5c5c5;
+}
+
+.des-zone{
+  text-align:left;
+  margin-top:19px;
+  font-size:17px;
+}
+
+.comment-zone{
+  margin-top:121px;
+  text-align:left;
+  font-size:19px;
+  
+}
+
+.sort-way{
+  font-size:13px;
+  cursor:pointer;
+}
+#sortByLikes{
+  margin-left:10px;
+  color:#40DA50;
+}
+
+
+.comment-info{
+
+
+  }
+.comment-top{
+  display:inline-block;
+  padding-top:8px;
+  cursor:pointer;
+}
+
+
+.comment-time{
+    color:#555555;
+    font-size:15px;
+}
+
+.comment-des{
+   padding-left:8px;
+}
+
+.comment-bottom{
+  text-align:right;
+}
+.comment-like{
+  display:inline-block;
+  padding-right:13.6px;
+  cursor:pointer;
+  text-align:center;
+}
+
+.comment-like-num{
+  display:inline-block;
+  font-size:17px;
+  padding-top:5px;
+  color:#c62917;
+}
+
+.comment-report{
+  font-size:14px;
+  display:inline-block;
+  color:#555555;
+  margin-top:10.5px;
+    cursor:pointer;
+}
+
+.write-reply{
+    display:inline-block;
+  padding-right:13.6px;
+  cursor:pointer;
+  font-size:15px;
+  padding-top:5px;
+  text-align:center;
+ color:#0ca5af;
+}
+
+.no-comment{
+	text-align:center;
+}
+
+.write-comment{
+  margin-top:41px;
+  background-color:white;
+  text-align:center;
+      border-bottom:2px solid black;
+  
+}
+
+.comment-input{
+    width:89%;
+    min-height:20px;
+    border:0;
+    font-size:16px;
+    padding:7px;
+          word-wrap: break-word;
+        word-break: break-all;
+}
+.comment-submit{
+	display:inline-block;
+	width:6%;
+	font-size:15px;
+	background-color:#2871D5;
+	padding: 3.6px 3.1px;
+	color:white;	
+	cursor:pointer;
+	border-radius:7px;
+}
+.comment-input:focus{
+  outline:none;
+}
+	
