@@ -5,7 +5,7 @@ $(document).ready(function(){
 			data : {articleId:$('.title-zone').data('id'), comment:$('.comment-input').val()},
 			method : "get",
 			success : function(data){
-				alert("successa");
+				alert("successaa");
 			}
 		});
 	});
