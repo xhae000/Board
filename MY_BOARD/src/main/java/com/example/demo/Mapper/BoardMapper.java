@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.DTO.Article;
+import com.example.demo.DTO.Comment;
 
 @Mapper
 public interface BoardMapper {
@@ -30,4 +31,9 @@ public interface BoardMapper {
 	  @Update("update article set see=see+1 where id=#{id}")
 	  Boolean plusSee(@Param("id") int id);
 	  
+	  @Select("select COUNT(*) from comment where article_id=#{article_id}")
+	  int getCommentCount(@Param("article_id")int article_id);
+	  
+	  @Select("select * from comment where article_id=92  order by parent_id limit #{start_num},15")
+	  List<Comment> getCommentLists(@Param("start_num")int start_num);
 }

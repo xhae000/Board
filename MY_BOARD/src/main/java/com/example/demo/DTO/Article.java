@@ -13,6 +13,7 @@ public class Article {
 	int see;
 	String writer_image;
 	String image;
+	int comments;
 	
 	public Article(Integer writer_id,String nickname,String title,String description,String writer_image,String image) {
 		this.writer_id=writer_id;
@@ -90,6 +91,14 @@ public class Article {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public int getComments() {
+		return comments;
+	}
+
+	public void setComments(int comments) {
+		this.comments = comments;
 	}
 	
 	

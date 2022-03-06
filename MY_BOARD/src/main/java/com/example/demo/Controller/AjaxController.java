@@ -32,4 +32,12 @@ public class AjaxController {
 	public List<Article> loadArticles(@RequestParam int page){
 		return boardMapper.getArticleLists(page*30-30);
 	}
+	
+	@RequestMapping("/commentProccess")
+	@ResponseBody
+	public String commentProccess(@RequestParam("articleId") int id,@RequestParam("comment")String comment) {
+		System.out.println(id);
+		System.out.println(comment);
+		return "";
+	}
 }

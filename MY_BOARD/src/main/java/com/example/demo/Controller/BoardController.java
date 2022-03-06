@@ -81,6 +81,9 @@ public class BoardController {
 	public String article(@PathVariable int id,Model model) {
 		Article article = boardMapper.getArticle(id);
 		model.addAttribute("article",article);
+		model.addAttribute("commentCount",boardMapper.getCommentCount(id));
+		model.addAttribute("comments",boardMapper.getCommentLists(0));
+		
 		boardMapper.plusSee(id);
 		return "/article";
 	}
