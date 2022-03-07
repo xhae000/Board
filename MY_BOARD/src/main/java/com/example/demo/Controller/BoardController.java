@@ -78,13 +78,17 @@ public class BoardController {
 	}
 
 	@RequestMapping(value="/article/{id}")
-	public String article(@PathVariable int id,Model model) {
+	public String article(@PathVariable int id,Model model,Authentication auth) {
+		boardMapper.plusSee(id); //조회수+=1
+		
 		Article article = boardMapper.getArticle(id);
 		model.addAttribute("article",article);
 		model.addAttribute("commentCount",boardMapper.getCommentCount(id));
-		model.addAttribute("comments",boardMapper.getCommentLists(0));
-		
-		boardMapper.plusSee(id);
+		model.addAttribute("comments",boardMapper.getCommentLists(id,0));
+		Boolean isWriter = false;
+		if(auth!=null && userMapper.getUserId(auth.getName()) == article.getWriter_id() )
+			isWriter = true;
+		model.addAttribute("isWriter",isWriter);
 		return "/article";
 	}
 	

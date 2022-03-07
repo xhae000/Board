@@ -11,9 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.example.demo.Handler.LoginFailureHandler;
+import com.example.demo.Handler.LoginSuccessHandler;
 import com.example.demo.Validate.SigninValidator;
 
 @Configuration
@@ -38,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").authenticated()
                 .antMatchers("/signup").anonymous()
                 .antMatchers("/write").authenticated()
+                .antMatchers("/commentProccess").authenticated()
                 .antMatchers("/**").permitAll();
         		
                 
@@ -45,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/signin")
                 .loginProcessingUrl("/signinProcess") //폼에서 id/pw를 넘겨줄 url		
                 .defaultSuccessUrl("/")	
+                .successHandler(successHandler())
                 .failureHandler(failureHandler())
                 .permitAll()
                 .usernameParameter("username")
@@ -77,5 +81,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	return new LoginFailureHandler();
     }
 
+    @Bean 
+    public AuthenticationSuccessHandler successHandler() {
+    	return new LoginSuccessHandler();
+    }
     
 }

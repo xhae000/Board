@@ -42,7 +42,7 @@
 		
 	
 	$('.signin-btn').click(function(){
-		window.location.href="/signin"
+		window.location.href="/signin?referer=/"
 	});
 	$('.signup-btn').click(function(){
 		window.location.href="/signup"
@@ -140,7 +140,7 @@
           	    <span class="likes">${i.likes}</span>
           	    <img class="article-info"
                  src="https://everytime.kr/images/new/container.articles.comment.png" />
-            	<span class="comments">1041</span>
+            	<span class="comments">${i.comments }</span>
          	</div>
         </div>
       </div>

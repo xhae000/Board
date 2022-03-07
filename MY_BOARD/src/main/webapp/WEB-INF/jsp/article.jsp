@@ -8,6 +8,9 @@
 <meta charset="utf-8">
 <title>${article.title} - ShareALL</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+	var id = ${article.id}
+</script>
 <script src="/js/common.js" type="text/javascript"></script>
 <script src="/js/article.js" type="text/javascript"></script>
 <script>
@@ -30,6 +33,8 @@ function getTime(time){
     else 
     	return Math.floor(sub/60/24/365)+"년 전";
 };
+
+var a=0;
 </script>
 
 <link href="/css/common.css?after" rel="stylesheet" />
@@ -73,7 +78,31 @@ function getTime(time){
       <div class="des-zone">
 			${article.description}
       </div>
-      
+      <div class="article-bottom">
+	      <div style="width:101.16px;"></div>
+	      <div class="article-like">
+                <img src="https://everytime.kr/images/new/container.articles.vote.png" width="16px" 
+                		style="vertical-align:middle;padding-bottom:5px;"/>
+                <span class="article-like-num">
+                  ${article.likes}
+                </span>  		
+	      </div>
+	      <c:if test="${isWriter}">
+	      	<div class="article-option">
+	      		<div id="edit-article" class="writer-option">
+	      			 수정
+	      		</div>
+	      		<div id="delete-article" class="writer-option">
+	      			삭제
+	      		</div>
+	      	</div>
+	      </c:if>
+	      <c:if test="${!isWriter}">
+	       <div class="article-report">
+	       	     신고하기
+	       </div>
+	      </c:if>
+      </div>
       <div class="comment-zone">
         <div style="border-bottom:0.1px solid #c5c5c5;padding-bottom:5.5px;">
           <div class="commentCount" data-commentCount = "${commentCount}">
@@ -82,7 +111,7 @@ function getTime(time){
         </div>
         <div class="comment-list">
         <c:forEach items="${comments}" var="i">
-          <div class="comment-box">
+	          <div class="comment-box" data-parent-id="${i.parent_id}">
             <div class="comment-info">
               <div style="display:flex;justify-content:space-between;">
                 <div>
@@ -126,19 +155,28 @@ function getTime(time){
             </div>
           </div>
           </c:forEach>
-          <c:if test="${commentCount==0}">
+       
+          </div>
+           <c:if test="${commentCount==0}">
           	 <div class="no-comment">
           			<img src="https://static.thenounproject.com/png/638755-200.png" /><br>
           			첫 댓글을 작성해주세요!
          	 </div>
           </c:if>
+ 		  <sec:authorize access="isAuthenticated()">
 				<div class="write-comment">
-				   	<input type="text" placeholder="댓글을 입력해주세요." maxlength="200" class="comment-input" />
-				   	<div class="comment-submit">
-				   		등록
-				   	</div>
+						   	<input type="text" placeholder="댓글을 입력해주세요." maxlength="200" class="comment-input" />
+						   	<div class="comment-submit">
+						   		등록
+						   	</div>
+				   	 	
 				</div>
-          </div>
+		  </sec:authorize>
+		  <sec:authorize access = "isAnonymous()">
+		  		<div class="comment-login">
+		  			<a href="/signin?referer=/article/${article.id}">로그인</a>이 필요한 서비스입니다.
+		  		</div>
+		  </sec:authorize>	
         </div>
        </div>
   	</div>

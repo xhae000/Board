@@ -32,6 +32,7 @@
       SIGN IN
     </div>
       <form method="post" action="/signinProcess">
+        <input type="hidden" name="referer" value="${referer}">
         <input name="username" placeholder="아이디" maxlength="32"   type="text"  id="username" 	/>
         <div id="username_empty" class="alert">
         </div>

@@ -5,11 +5,12 @@
 	display:inline-block;
 	background-color:#ffffff;
 	width:48%;
-	min-height:540px;
-	min-width:700px;
-  padding:27px 21px 12px 21px;
+	min-height:440px;
+	min-width:670px;
+  padding:27px 21px 17px 21px;
   border-radius:1.1%;
   border:0.2px solid #c5c5c5;
+  margin-bottom:23px;
 }
 .title-zone{
   text-align:left;
@@ -50,7 +51,7 @@
 }
 
 .comment-zone{
-  margin-top:121px;
+
   text-align:left;
   font-size:19px;
   
@@ -76,6 +77,11 @@
   cursor:pointer;
 }
 
+.comment-box{
+	border-bottom:0.1px solid #c5c5c5;
+	padding-bottom:9px;
+	padding-top:4px;
+}
 
 .comment-time{
     color:#555555;
@@ -84,6 +90,7 @@
 
 .comment-des{
    padding-left:8px;
+   font-size:15.5px;
 }
 
 .comment-bottom{
@@ -126,11 +133,12 @@
 }
 
 .write-comment{
-  margin-top:41px;
+  margin-top:17px;
   background-color:white;
   text-align:center;
-      border-bottom:2px solid black;
-  
+  padding-top:5px;
+  border:0.2px solid #c5c5c5;
+  border-radius:5px;;
 }
 
 .comment-input{
@@ -155,4 +163,59 @@
 .comment-input:focus{
   outline:none;
 }
+
+.comment-login{
+	text-align:center;
+	font-size:16px;
+	padding-top:19px;
+	margin-bottom:6.8px;
 	
+}
+
+.article-bottom{
+	margin-top:55px;
+	display:flex;
+	justify-content:space-between;
+	padding:7px;
+}
+
+.article-like{
+	padding: 4px 26px;
+	padding-bottom:8px;
+	border:0.1px solid #c62917;
+	border-radius:21px;
+	cursor:pointer;	
+}
+
+.writer-option{
+	margin-top:13px;
+	display:inline-block;
+	padding:3px 9px;
+	font-size:16px;
+	cursor:pointer;
+	border-radius:12px;
+}
+
+#edit-article{
+	border:0.2px solid #13ac39;
+	color: #13ac39;
+}
+
+#delete-article{
+	border:0.2px solid #f7114a;
+	color:#f7114a;
+}
+
+.article-report{
+	width:101.16px;
+	text-align:center;
+	padding-top:25px;
+}
+
+.article-like-num{
+	  display:inline-block;
+  font-size:17px;
+  padding-top:5px;
+  color:#c62917;
+	
+}

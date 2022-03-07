@@ -12,6 +12,17 @@ public class Comment {
 	int parent_id;
 	
 	
+	public Comment(int writer_id,int article_id,String description,String writer_image,
+			String nickname) {
+		this.writer_id = writer_id;
+		this.article_id = article_id;
+		this.description = description;
+		this.writer_image = writer_image;
+		this.nickname = nickname;
+
+	}
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -30,7 +41,7 @@ public class Comment {
 	public void setDescription(String description) {
 		this.description = description;
 	}
- int getLikes() {
+	public int getLikes() {
 		return likes;
 	}
 	public void setLikes(int likes) {

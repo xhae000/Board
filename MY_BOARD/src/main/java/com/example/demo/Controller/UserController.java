@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.DTO.User;
 import com.example.demo.Mapper.UserMapper;
@@ -27,7 +28,9 @@ public class UserController {
 	
 	
 	@RequestMapping("/signin")
-	public String signin(Authentication auth) {
+	public String signin(Authentication auth,@RequestParam(value="referer",required=false)String referer
+			,Model model) {
+		model.addAttribute("referer",referer);
 		return auth==null?"/signin":"redirect:/";
 	}
 	

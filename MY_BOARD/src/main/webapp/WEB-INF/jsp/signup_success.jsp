@@ -37,7 +37,7 @@
   </div>
   <div style="text-align:center;margin-top:8%;">
   		<div class="btn" style="border:0.1px solid #2D91F8;color:#2D91F8;"
-  				onclick="location.replace('/signin')">
+  				onclick="location.replace('/signin?referer=/')">
   				로그인
   		</div>
   		<div class="btn" style="border:0.1px solid #c5c5c5;"
