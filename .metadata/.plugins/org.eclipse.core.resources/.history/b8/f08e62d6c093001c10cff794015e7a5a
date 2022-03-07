@@ -1,5 +1,0 @@
-package com.example.demo.Handler;
-
-public class LoginFailureHandler {
-
-}
