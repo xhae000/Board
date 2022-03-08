@@ -4,6 +4,19 @@
  
 
 $(document).ready(function(){
+	
+		var w = $('.article-image').width();
+		var h = $('.article-image').height();
+		if(w>=h){
+			$('.article-image').css("min-width","600px");
+			$('.article-image').css("max-width","270px");
+		}
+		else{
+			$('.article-image').css("min-height","270px");
+			$('.article-image').css("max-height","600px");
+		}
+	
+
 		
 	function updateComment(data){
 		$('.comment-list').empty();
@@ -86,6 +99,15 @@ $(document).ready(function(){
 			}
 		})	
 	});
+	
+	$('#delete-article').click(function(){
+		if(confirm("게시글을 삭제하시겠습니까?"))
+			location.href="/deleteArticle/"+id;
+	});
+	
+	$('#edit-article').click(function(){
+		location.href="/editArticle/"+id;
+	})
 	
 
 });

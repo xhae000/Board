@@ -40,6 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").authenticated()
                 .antMatchers("/signup").anonymous()
                 .antMatchers("/write").authenticated()
+                .antMatchers("/writeProccess").authenticated()
+                .antMatchers("/deleteArticle/*").authenticated()
+                .antMatchers("/editArticle/*").authenticated()
                 .antMatchers("/commentProccess").authenticated()
                 .antMatchers("/**").permitAll();
         		

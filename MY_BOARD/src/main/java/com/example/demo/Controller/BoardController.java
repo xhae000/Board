@@ -5,16 +5,17 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.UUID;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Common.Paging;
@@ -32,7 +33,7 @@ public class BoardController {
 	private UserMapper userMapper;
     private static final Logger LOGGER  = LogManager.getLogger(BoardController.class);
 	
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String index(Model model,Principal pri,Authentication auth) {
 		if(auth==null) LOGGER.info("비회원 입니다.");
 		else LOGGER.info("현재 접속 계정의 아이디/권한 : "+auth.getName()+"/"+auth.getAuthorities());
@@ -47,12 +48,12 @@ public class BoardController {
 		return "/index";
 	}
 
-	@RequestMapping(value = "/write" ,method=RequestMethod.GET)
+	@GetMapping(value = "/write")
 	public String write() {
 		return "/write";
 	}
 	
-	@RequestMapping(value = "/writeProccess", method=RequestMethod.POST)
+	@PostMapping(value = "/writeProccess")
 	public String writeProcess(@ModelAttribute("file")MultipartFile file,@ModelAttribute("title") String title,
 			@ModelAttribute("description")String des, Principal pri) throws IllegalStateException, IOException {
 		String filename = "no-image";
@@ -61,7 +62,7 @@ public class BoardController {
 			return "redirect:/";
 		
 		if(!file.isEmpty()) {
-			filename = UUID.randomUUID().toString()+"_"+file.getOriginalFilename();
+			filename = UUID.randomUUID().toString()+"_"+FilenameUtils.getExtension(file.getOriginalFilename());
 			File newFile = new File(filename);
 			file.transferTo(newFile);
 			filename="/image/"+filename;
@@ -71,13 +72,11 @@ public class BoardController {
 		Article article =new Article(user.getId(),user.getNickname(),
 				title,des,user.getImage(),filename);
 		
-		
-		boardMapper.createArticle(article);
-		
-		return "redirect:/"; //쓴 글로 이동하게
+		boardMapper.createArticle(article);		
+		return "redirect:/";
 	}
 
-	@RequestMapping(value="/article/{id}")
+	@GetMapping(value="/article/{id}")
 	public String article(@PathVariable int id,Model model,Authentication auth) {
 		boardMapper.plusSee(id); //조회수+=1
 		
@@ -90,6 +89,44 @@ public class BoardController {
 			isWriter = true;
 		model.addAttribute("isWriter",isWriter);
 		return "/article";
+	}
+	
+	@GetMapping(value="/deleteArticle/{id}")
+	public String deleteArticle(@PathVariable int id, Authentication auth) {
+		if(userMapper.getUserId(auth.getName())==
+				boardMapper.getArticle(id).getWriter_id()) //글쓴이 여부 (맞을 때)
+			boardMapper.DeleteArticle(id);
+		return "redirect:/";
+	}
+	
+	@GetMapping(value="/editArticle/{id}")
+	public String editArticle(@PathVariable int id, Authentication auth, Model model) {
+		if(userMapper.getUserId(auth.getName())!=
+				boardMapper.getArticle(id).getWriter_id())  //글쓴이 여부 (아닐 때)
+			return "redirect:/";
+		model.addAttribute("article",boardMapper.getArticle(id));
+		return "/edit";
+	}
+	
+	@PostMapping(value="/editArticle/{id}")
+	public String editArticleProcess(@ModelAttribute("title")String title,@ModelAttribute("description")String des,
+			@ModelAttribute("isImageEdit")String isImageEdit, @ModelAttribute("file")MultipartFile file , 
+			@PathVariable int id, Authentication auth) throws IllegalStateException, IOException {
+		String filename = "";
+		if(title.length()>20||des.length()>1100)
+			return "redirect:/";
+		
+		if(!file.isEmpty()) {
+			filename = UUID.randomUUID().toString()+"_"+FilenameUtils.getExtension(file.getOriginalFilename());
+			File newFile = new File(filename);
+			file.transferTo(newFile);
+			filename="/image/"+filename;
+		}		
+		else filename = isImageEdit.equals("true")?"no-image":boardMapper.getArticle(id).getImage(); //이미지 그대로면 원래 이미지 가져와서 저장
+		
+		
+		boardMapper.updateArticle(id,title,des,filename);
+		return "redirect:/article/"+id	;
 	}
 	
 }

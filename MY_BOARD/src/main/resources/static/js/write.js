@@ -24,6 +24,7 @@
 				$('.upload-img').css('display','none');
 				$('.img-info').css('display','block');
 				
+				
 				var reader = new FileReader();
 		        reader.onload = function (e) {
 		            $('.img-preview').attr('src', e.target.result);

@@ -50,8 +50,10 @@ public class AjaxController {
 		User user = userMapper.getUserInfo(auth.getName());
 		Comment cmt = new Comment(user.getId(), id, comment, user.getImage(),
 				user.getNickname());
-		boardMapper.createComment(cmt);
-		boardMapper.addArticleComment(id);
+		if(comment.length()<=200) { // 글자수 200 제한
+			boardMapper.createComment(cmt);
+			boardMapper.addArticleComment(id);
+		}
 		// 댓글 등록과 동시에 댓글 업데이트		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("comments",  boardMapper.getCommentLists(id,0));

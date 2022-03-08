@@ -76,6 +76,11 @@ var a=0;
         </div>
       </div>
       <div class="des-zone">
+      <c:if test="${article.image ne 'no-image'}" >
+      	<div style="text-align:center;">     
+      	      		<img class="article-image" src="${article.image}"/>
+      	</div> 		
+      	</c:if>
 			${article.description}
       </div>
       <div class="article-bottom">

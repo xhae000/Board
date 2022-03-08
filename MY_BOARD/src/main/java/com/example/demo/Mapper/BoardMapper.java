@@ -2,6 +2,7 @@ package com.example.demo.Mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -57,6 +58,14 @@ public interface BoardMapper {
 	  
 	  @Update("update article set comments = comments+1 where id= #{id}")
 	  Boolean addArticleComment(@Param("id")int id);
+	  
+	  @Delete("delete from article where id=#{id}")
+	  Boolean DeleteArticle(@Param("id")int id);
+	  
+	  @Update("update article set title = #{title}, description=#{des}, image=#{image} where id=#{id}")
+	  Boolean updateArticle(@Param("id")int id ,
+			  @Param("title")String title, @Param("des")String des ,@Param("image")String image);
+	
 	  
 }
 
