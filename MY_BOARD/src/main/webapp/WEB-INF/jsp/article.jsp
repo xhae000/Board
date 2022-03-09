@@ -9,7 +9,11 @@
 <title>${article.title} - ShareALL</title>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-	var id = ${article.id}
+	var id = ${article.id};
+	var commentCount = parseInt(${commentCount});
+
+	const nowUser = ${userId};
+
 </script>
 <script src="/js/common.js" type="text/javascript"></script>
 <script src="/js/article.js" type="text/javascript"></script>
@@ -116,11 +120,13 @@ var a=0;
         </div>
         <div class="comment-list">
         <c:forEach items="${comments}" var="i">
-      		<c:set var="commentColor" value="background-color:#ececec" />      
+      		<c:set var="commentColor" value="background-color:#ffffff" />      
         	<c:if test="${i.isReply eq '1' }">
         		<c:set var="commentColor" value="background-color:#e9e9e9;padding-left:36.2px;" />
         	</c:if>
-           <div class="comment-box" id="comment${i.id}" data-parent-id="${i.parent_id}" style="${commentColor}">
+        	<c:if test="${i.writer_id ne '0'}">
+           <div class="comment-box" id="comment${i.id}" 
+          		 data-parent-id="${i.parent_id}" style="${commentColor}">
             <div class="comment-info">
               <div style="display:flex;justify-content:space-between;">
                 <div>
@@ -138,9 +144,16 @@ var a=0;
               		</script>
                   </span>
                 </div>
+                <c:if test="${userId ne i.writer_id}">
                  <div class="comment-report">
                   신고
                 </div>
+                </c:if>
+                <c:if test="${userId eq i.writer_id }">
+                <div class='comment-menu' data-id="${i.id}">
+                	<span class='edit-comment'>수정</span><span class='delete-comment'>삭제</span>
+                </div>
+                </c:if>
               </div>
               <div style="display:inline-block;">
                 <div class="comment-des">
@@ -156,7 +169,7 @@ var a=0;
               </div>
               <div class="comment-like" data-id="${i.id}">
                 <img src="https://everytime.kr/images/new/container.articles.vote.png" width="16px" style="vertical-align:middle;padding-bottom:5px;"/>
-                <span class="comment-like-num">
+                <span id="like${i.id}" class="comment-like-num">
                   ${i.likes}
                 </span>
               </div>
@@ -169,7 +182,7 @@ var a=0;
               </div>
               <div class="comment-like" data-id="${i.id}">
                 <img src="https://everytime.kr/images/new/container.articles.vote.png" width="16px" style="vertical-align:middle;padding-bottom:5px;"/>
-                <span class="comment-like-num">
+                <span  class="comment-like-num">
                   ${i.likes}
                 </span>
               </div>
@@ -177,6 +190,10 @@ var a=0;
               </sec:authorize>
             </div>
           </div>
+          </c:if>
+          <c:if test="${i.writer_id eq '0' }">
+          	<div class="comment-box">삭제된 댓글입니다.</div>
+          </c:if>
           </c:forEach>
        
           </div>

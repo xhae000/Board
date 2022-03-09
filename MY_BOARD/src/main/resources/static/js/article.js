@@ -17,19 +17,26 @@ $(document).ready(function(){
 		}
 	
 
+
 		
-	function updateComment(data){
+	function updateComment(data){	
 		$('.comment-list').empty();
 		$('.no-comment').css('display','none');
 		$('.commentCount').empty().append("댓글 "+data.commentCount+"개");
 		$.each(data.comments , function (index, i) {
 			var des =""+i.description
 			var commentColor = "background-color:#ffffff";
+			var comment_menu = "<div class='comment-report'>신고</div>"
 			
 			if(i.isReply == '1'){
 				commentColor = "background-color:#ececec;padding-left:36.2px";
 			}
 			
+			
+			if (nowUser == i.writer_id){
+				comment_menu = "<div class='comment-menu' data-id='"+i.id+"'><span class='edit-comment'>수정</span><span class='delete-comment'>삭제</span></div>"
+			}
+			if(i.writer_id!='0'){
 			$('.comment-list').append("<div id='comment"+i.id+"' class='comment-box' data-parent-id='"+i.parent_id+"' style='"+commentColor+"'>"+
             "<div class='comment-info'>"+
             "  <div style='display:flex;justify-content:space-between;'>"+
@@ -47,9 +54,7 @@ $(document).ready(function(){
     			   "</script>"+
      "             </span>"+
       "          </div>"+
-       "          <div class='comment-report'>"+
-         "         신고"+
-          "      </div>"+
+				comment_menu+
           "    </div>"+
           "    <div style='display:inline-block;'>"+
           "      <div class='comment-des'>"+
@@ -62,14 +67,17 @@ $(document).ready(function(){
                 "<img src='https://everytime.kr/images/new/container.articles.comment.png'   width='18px;' style='vertical-align:middle;padding-bottom:5px;'/>"+
                    " 답글"+
               "</div>"+
-              "<div class='comment-like'>"+
+              "<div class='comment-like' data-id='"+i.id+"'>"+
                 "<img src='https://everytime.kr/images/new/container.articles.vote.png' width='16px' style='vertical-align:middle;padding-bottom:5px;'/>"+
-                "<span class='comment-like-num'>&nbsp;"
+                "&nbsp;<span id='like"+i.id+"'class='comment-like-num'>"
                   +i.likes+
                 "</span>"+
               "</div>"+
             "</div>"+
          "</div>");
+         }else{
+			$('.comment-list').append("<div class='comment-box'>삭제된 댓글입니다.</div>")
+		}
          $('.comment-input').val('');
 		});
 	}
@@ -123,7 +131,7 @@ $(document).ready(function(){
 		$('#comment'+$(this).data('id')).append(
 			           "<div class='reply-input'>"+
             				"<div style='margin-left:5%;'	 class='write-comment'>"+
-						   	"<input type='text' id='reply_des' placeholder='답글을 입력해주세요.' maxlength='200' class='reply-input' />"+
+						   	"<input type='text' id='reply_des' placeholder='답글을 입력해주세요.' maxlength='200' class='reply-input-box' />"+
 						   	"<div id='reply-submit' data-id='"+$(this).data('id')+"' data-parent-id='"+$(this).data('parent-id')+"'>"+
 						   		"등록"+
 						   	"</div>"+		   	 	
@@ -154,4 +162,50 @@ $(document).ready(function(){
 				}
 			})
 	});
+	
+	$('body').on('click','.comment-like',function(){
+		var comment_id = $(this).data('id');
+		$.ajax({
+			url : "/commentLike/"+comment_id,
+			method : "get",
+			success : function(data){
+				if(data=="need_login"){
+					if (confirm("로그인이 필요한 서비스 입니다.\n로그인 하시겠습니까?"))
+						location.href="/signin?referer=article/"+id;
+				}
+				else if(data=="already_like")
+					alert("좋아요는 한 번만 가능합니다.");
+				else
+					$('#like'+comment_id).empty().append(" "+data);
+					//좋아요 수 업데이트		
+			}
+		})	
+	});
+	
+	$('body').on('click','.delete-comment',function(){
+			if(confirm("댓글을 삭제하시겠습니까?")){
+				var v= $(this).parent().data('id');
+				$.ajax({
+					url : "/deleteComment/"+v,
+					method : "get",
+					success:function(data){
+						if(data=='normal'){						
+							commentCount-=1;				
+							$('.commentCount').empty().append("댓글 "+commentCount+"개");
+							$('#comment'+v).remove();
+						}
+						else if(data=="parent"){
+							commentCount-=1;				
+							$('.commentCount').empty().append("댓글 "+commentCount+"개");
+							$('#comment'+v).empty().append("삭제된 댓글입니다.");
+						}
+						
+
+					}
+				});
+				
+			}
+	});
+		
+	
 });

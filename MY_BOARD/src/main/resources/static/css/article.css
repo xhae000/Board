@@ -248,16 +248,43 @@ input:focus{
 }
 
 .reply-input{
-	width:89%;
+	
+	margin-top:9px;
+	width:97%;
 	min-height:20px;
     border:0;
     font-size:16px;
     padding:0px 7px 5px 7px;
-          word-wrap: break-word;
-        word-break: break-all;
-	
+    border-top:0.1px solid #c5c5c5;
+    
 }
 
 .commentCount{
 	margin-left:11px;
 }
+
+.reply-input-box{
+	display:inline-block;
+		width:89%;
+	min-height:20px;
+    border:0;
+    font-size:16px;
+    padding:0px 7px 5px 7px;
+}
+
+.comment-menu{
+	font-size:14.4px;
+	cursor:pointer;
+}
+
+.edit-comment{
+	color:#13ac39;
+	margin-right:5px;
+}
+
+.delete-comment{
+	color:#f7114a;
+	
+}
+
+

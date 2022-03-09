@@ -71,9 +71,24 @@ public class AjaxController {
 		else { 
 			boardMapper.likePost(auth.getName(), id, "article");
 			boardMapper.addArticleLike(id);
-			return Integer.toString(boardMapper.getLikeCount(id));
+			return Integer.toString(boardMapper.getArticleLikeCount(id));
 				
 		}
+	}
+		
+		@RequestMapping("/commentLike/{id}")
+		@ResponseBody
+		public String commentLike(@PathVariable int id,Authentication auth){
+			if (auth==null)
+				return "need_login";
+			else if(boardMapper.isLike(auth.getName(),id,"comment")!=null)
+				return "already_like";
+			else { 
+				boardMapper.likePost(auth.getName(), id, "comment");
+				boardMapper.addCommentLike(id);
+				return Integer.toString(boardMapper.getCommentLikeCount(id));
+					
+			}
 
 	}
 	@RequestMapping("/replyProcess")
@@ -89,11 +104,47 @@ public class AjaxController {
 			Comment comment = new Comment(user.getId(),article_id,des,user.getImage(),user.getNickname());
 			comment.setParent_id(parent_id);
 			boardMapper.createReply(comment);
+			boardMapper.addArticleComment(article_id);
+
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("comments",  boardMapper.getCommentLists(article_id,0));
 		map.put("commentCount", boardMapper.getCommentCount(article_id));
 		return map;	
 	}
+	
+	@RequestMapping("/deleteComment/{id}")
+	@ResponseBody
+	public String  deleteComment(@PathVariable int id, Authentication auth) {
+		String resultMSG = "";
+		
+		if(auth!=null || boardMapper.getComment(id).getWriter_id()==userMapper.getUserId(auth.getName())) {
+			int article_id = boardMapper.getComment(id).getArticle_id();
+			if(boardMapper.isReply(id).equals("1")) {
+				boardMapper.minusArticleComment(article_id, 1);			
+				boardMapper.deleteComment(id);
+				resultMSG = "normal";
+			}else {
+				int parent_id = boardMapper.getComment(id).getParent_id();
+				
+				if (boardMapper.getCountParent(parent_id) == 1) {
+					boardMapper.deleteComment(id);
+					resultMSG = "normal";
+				}
+				else {
+					boardMapper.deleteParent(id);
+					resultMSG = "parent";
+				}
+				boardMapper.minusArticleComment(article_id, 1);				
+			}
+
+
+		}
+		return resultMSG;
+	}
+	
+	
+	
+	
 				
 }

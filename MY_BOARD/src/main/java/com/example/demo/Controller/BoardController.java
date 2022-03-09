@@ -3,7 +3,10 @@ package com.example.demo.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Common.Paging;
 import com.example.demo.DTO.Article;
+import com.example.demo.DTO.Comment;
 import com.example.demo.DTO.User;
 import com.example.demo.Mapper.BoardMapper;
 import com.example.demo.Mapper.UserMapper;
@@ -77,17 +81,28 @@ public class BoardController {
 	}
 
 	@GetMapping(value="/article/{id}")
-	public String article(@PathVariable int id,Model model,Authentication auth) {
+	public String article(@PathVariable int id,Model model,Authentication auth, HttpSession session) {
 		boardMapper.plusSee(id); //조회수+=1
 		
 		Article article = boardMapper.getArticle(id);
 		model.addAttribute("article",article);
 		model.addAttribute("commentCount",boardMapper.getCommentCount(id));
-		model.addAttribute("comments",boardMapper.getCommentLists(id,0));
+		List<Comment> comments = boardMapper.getCommentLists(id,0);
+		for(Comment c : comments) { 
+			if(c.getWriter_id()==0) {
+				boardMapper.DeleteArticle(c.getId());
+			}
+		}
+		
+		model.addAttribute("comments",comments);
 		Boolean isWriter = false;
 		if(auth!=null && userMapper.getUserId(auth.getName()) == article.getWriter_id() )
 			isWriter = true;
 		model.addAttribute("isWriter",isWriter);
+		if(auth != null) {
+			session.setAttribute("userId",userMapper.getUserId(auth.getName()));
+			System.out.println(session.getAttribute("userId"));
+		}	
 		return "/article";
 	}
 	

@@ -51,10 +51,16 @@ public interface BoardMapper {
 	  Integer isLike(@Param("username")String username,@Param("post_id")int post_id, @Param("postType")String articleORcomment);
 	  
 	  @Select("select likes from article where id=#{id}")
-	  int getLikeCount(@Param("id")int id);
+	  int getArticleLikeCount(@Param("id")int id);
+	  
+	  @Select("select likes from comment where id = #{id}")
+	  int getCommentLikeCount(@Param("id")int id);
 
 	  @Update("update article set likes = likes + 1 where id = #{id}")
 	  Boolean addArticleLike(@Param("id")int id);
+	 
+	  @Update("update comment set likes = likes + 1 where id = #{id}")
+	  Boolean addCommentLike(@Param("id")int id);
 	  
 	  @Update("update article set comments = comments+1 where id= #{id}")
 	  Boolean addArticleComment(@Param("id")int id);
@@ -72,8 +78,30 @@ public interface BoardMapper {
 	  		 + "#{comment.parent_id},now(),true)")
 	  Boolean createReply(@Param("comment")Comment comment);	 
 	  
-		@Select("select nickname from comment where id = #{id}")
-		String getNicknameByComment(@Param("id")int id);
+	@Select("select nickname from comment where id = #{id}")
+	String getNicknameByComment(@Param("id")int id);
 
+	@Delete("delete from comment where id=#{id}")
+	Boolean deleteComment(@Param("id")int id);
+	
+	@Select("select * from comment where id=#{id}")
+	Comment getComment(@Param("id")int id);
+	
+	@Update("update article set comments = comments - #{delete} where id = #{id}")
+	Boolean minusArticleComment(@Param("id")int id,@Param("delete")int delete);
+	
+	@Select("select isReply from comment where id=#{id}")
+	String isReply(@Param("id") int id);
+	
+	@Select("select parent_id from comment where id=#{id}")
+	int getParent_id(@Param("id")int id);
+	
+
+	@Select("select count(*) from comment where parent_id=#{parent_id}")
+	int getCountParent(@Param("parent_id")int parent_id);
+	
+	@Update("update comment set writer_id=0,description=0,upload_time=0,likes=0,writer_image=0,"
+			+ "nickname=0 where id=#{id}")
+	Boolean deleteParent(@Param("id")int id);
 }
 
