@@ -27,7 +27,7 @@
   <div class="screen-middle">
 
     <div class="content">
-    <form class="writeForm" action="/writeProccess" method="post" enctype="multipart/form-data">
+    <form class="writeForm" action="/writeProcess" method="post" enctype="multipart/form-data">
     <div class="write-article">
       글쓰기
     </div>

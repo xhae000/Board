@@ -10,7 +10,7 @@ public class Comment {
 	String writer_image;
 	String nickname;
 	int parent_id;
-	
+	String isReply;
 	
 	public Comment(int writer_id,int article_id,String description,String writer_image,
 			String nickname) {
@@ -19,7 +19,6 @@ public class Comment {
 		this.description = description;
 		this.writer_image = writer_image;
 		this.nickname = nickname;
-
 	}
 	
 	
@@ -77,4 +76,15 @@ public class Comment {
 	public void setUpload_time(String upload_time) {
 		this.upload_time = upload_time;
 	}
+
+
+	public String getIsReply() {
+		return isReply;
+	}
+
+
+	public void setIsReply(String isReply) {
+		this.isReply = isReply;
+	}
+	
 }

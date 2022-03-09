@@ -116,7 +116,11 @@ var a=0;
         </div>
         <div class="comment-list">
         <c:forEach items="${comments}" var="i">
-	          <div class="comment-box" data-parent-id="${i.parent_id}">
+      		<c:set var="commentColor" value="background-color:#ececec" />      
+        	<c:if test="${i.isReply eq '1' }">
+        		<c:set var="commentColor" value="background-color:#e9e9e9;padding-left:36.2px;" />
+        	</c:if>
+           <div class="comment-box" id="comment${i.id}" data-parent-id="${i.parent_id}" style="${commentColor}">
             <div class="comment-info">
               <div style="display:flex;justify-content:space-between;">
                 <div>
@@ -145,18 +149,32 @@ var a=0;
               </div>
             </div>
             <div class="comment-bottom">
-              <div class="write-reply">
+            <sec:authorize access="isAuthenticated()">
+              <div class="write-reply" data-id="${i.id}" data-parent-id="${i.parent_id}">
                 <img src="https://everytime.kr/images/new/container.articles.comment.png"   width="18px;" style="vertical-align:middle;padding-bottom:5px;"/>
                    답글
               </div>
-              <div class="comment-like">
+              <div class="comment-like" data-id="${i.id}">
                 <img src="https://everytime.kr/images/new/container.articles.vote.png" width="16px" style="vertical-align:middle;padding-bottom:5px;"/>
                 <span class="comment-like-num">
                   ${i.likes}
                 </span>
               </div>
               
-
+              </sec:authorize>
+            <sec:authorize access="isAnonymous()">
+              <div class="write-reply-anony" data-id="${i.id}" data-parent-id="${i.parent_id}">
+                <img src="https://everytime.kr/images/new/container.articles.comment.png"   width="18px;" style="vertical-align:middle;padding-bottom:5px;"/>
+                   답글
+              </div>
+              <div class="comment-like" data-id="${i.id}">
+                <img src="https://everytime.kr/images/new/container.articles.vote.png" width="16px" style="vertical-align:middle;padding-bottom:5px;"/>
+                <span class="comment-like-num">
+                  ${i.likes}
+                </span>
+              </div>
+              
+              </sec:authorize>
             </div>
           </div>
           </c:forEach>

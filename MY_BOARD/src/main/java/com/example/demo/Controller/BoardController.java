@@ -53,7 +53,7 @@ public class BoardController {
 		return "/write";
 	}
 	
-	@PostMapping(value = "/writeProccess")
+	@PostMapping(value = "/writeProcess")
 	public String writeProcess(@ModelAttribute("file")MultipartFile file,@ModelAttribute("title") String title,
 			@ModelAttribute("description")String des, Principal pri) throws IllegalStateException, IOException {
 		String filename = "no-image";

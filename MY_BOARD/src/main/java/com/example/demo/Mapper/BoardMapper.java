@@ -65,7 +65,15 @@ public interface BoardMapper {
 	  @Update("update article set title = #{title}, description=#{des}, image=#{image} where id=#{id}")
 	  Boolean updateArticle(@Param("id")int id ,
 			  @Param("title")String title, @Param("des")String des ,@Param("image")String image);
-	
 	  
+	  @Insert("insert into comment(writer_id,article_id,description,writer_image,nickname,parent_id,upload_time,isReply)"+
+	  		 "values(#{comment.writer_id}, #{comment.article_id}, #{comment.description},"
+	  		 + " #{comment.writer_image}, #{comment.nickname},"
+	  		 + "#{comment.parent_id},now(),true)")
+	  Boolean createReply(@Param("comment")Comment comment);	 
+	  
+		@Select("select nickname from comment where id = #{id}")
+		String getNicknameByComment(@Param("id")int id);
+
 }
 

@@ -43,9 +43,9 @@ public class AjaxController {
 		return boardMapper.getArticleLists(page*30-30);
 	}
 	
-	@RequestMapping("/commentProccess")
+	@RequestMapping("/commentProcess")
 	@ResponseBody
-	public Map<String, Object> commentProccess(@RequestParam("articleId") int id,@RequestParam("comment")String comment,
+	public Map<String, Object> commentProcess(@RequestParam("articleId") int id,@RequestParam("comment")String comment,
 			Authentication auth, Model model) {
 		User user = userMapper.getUserInfo(auth.getName());
 		Comment cmt = new Comment(user.getId(), id, comment, user.getImage(),
@@ -76,4 +76,24 @@ public class AjaxController {
 		}
 
 	}
+	@RequestMapping("/replyProcess")
+	@ResponseBody
+	public Map<String,Object> replyProcess(Authentication auth,
+			@RequestParam("parent_id")Integer parent_id,@RequestParam("des") String des,
+			@RequestParam("article_id")Integer article_id,@RequestParam("comment_id")Integer comment_id){
+		User user =userMapper.getUserInfo(auth.getName());
+		
+		if(des.length()<=200) {	
+			String toUser = "<span style=\"color:#088400\">"+boardMapper.getNicknameByComment(comment_id)+"</span> ";
+			des = toUser + des;
+			Comment comment = new Comment(user.getId(),article_id,des,user.getImage(),user.getNickname());
+			comment.setParent_id(parent_id);
+			boardMapper.createReply(comment);
+		}
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("comments",  boardMapper.getCommentLists(article_id,0));
+		map.put("commentCount", boardMapper.getCommentCount(article_id));
+		return map;	
+	}
+				
 }

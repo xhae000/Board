@@ -24,8 +24,13 @@ $(document).ready(function(){
 		$('.commentCount').empty().append("댓글 "+data.commentCount+"개");
 		$.each(data.comments , function (index, i) {
 			var des =""+i.description
+			var commentColor = "background-color:#ffffff";
 			
-			$('.comment-list').append("<div class='comment-box' data-parent-id='"+i.parent_id+"'>"+
+			if(i.isReply == '1'){
+				commentColor = "background-color:#ececec;padding-left:36.2px";
+			}
+			
+			$('.comment-list').append("<div id='comment"+i.id+"' class='comment-box' data-parent-id='"+i.parent_id+"' style='"+commentColor+"'>"+
             "<div class='comment-info'>"+
             "  <div style='display:flex;justify-content:space-between;'>"+
             "    <div>"+
@@ -53,7 +58,7 @@ $(document).ready(function(){
             "  </div>"+
           "  </div>"+
           "  <div class='comment-bottom'>"+
-          "    <div class='write-reply'>"+
+          "    <div class='write-reply' data-id='"+i.id+"' data-parent-id='"+i.parent_id+"'>"+
                 "<img src='https://everytime.kr/images/new/container.articles.comment.png'   width='18px;' style='vertical-align:middle;padding-bottom:5px;'/>"+
                    " 답글"+
               "</div>"+
@@ -72,8 +77,12 @@ $(document).ready(function(){
 	
 	
 	$('.comment-submit').click(function(){
+		if($('.comment-input').val()==''){
+			alert("내용을 입력해주세요.");
+			return ;
+		}
 		$.ajax({
-			url : "/commentProccess",
+			url : "/commentProcess",
 			data : {articleId:$('.title-zone').data('id'), comment:$('.comment-input').val()},
 			method : "get",
 			success : function(data){
@@ -109,5 +118,40 @@ $(document).ready(function(){
 		location.href="/editArticle/"+id;
 	})
 	
+	$('body').on('click','.write-reply',function(){
+		$('.reply-input').remove();
+		$('#comment'+$(this).data('id')).append(
+			           "<div class='reply-input'>"+
+            				"<div style='margin-left:5%;'	 class='write-comment'>"+
+						   	"<input type='text' id='reply_des' placeholder='답글을 입력해주세요.' maxlength='200' class='reply-input' />"+
+						   	"<div id='reply-submit' data-id='"+$(this).data('id')+"' data-parent-id='"+$(this).data('parent-id')+"'>"+
+						   		"등록"+
+						   	"</div>"+		   	 	
+				"</div>"+
+            "</div>"
+		)
 
+	});
+		$('body').on('click','.write-reply-anony',function(){
+			if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?"))
+				location.href = "/signin?referer=/article/"+id;	
+
+	});
+	$('body').on('click','#reply-submit',function(){
+		var parent_id = $(this).data('parent-id');
+		var comment_id = $(this).data('id');
+		
+		if($('#reply_des').val()==''){
+			alert("내용을 입력해주세요.")
+			return;
+		}
+			$.ajax({
+				url : "/replyProcess?parent_id="+parent_id+"&comment_id="
+					+comment_id+"&des="+$('#reply_des').val()+"&article_id="+id,
+				method : "get",
+				success : function(data){
+				updateComment(data);
+				}
+			})
+	});
 });
