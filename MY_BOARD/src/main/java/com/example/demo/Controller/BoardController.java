@@ -3,6 +3,8 @@ package com.example.demo.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.Common.Paging;
@@ -26,6 +29,7 @@ import com.example.demo.DTO.Article;
 import com.example.demo.DTO.Comment;
 import com.example.demo.DTO.User;
 import com.example.demo.Mapper.BoardMapper;
+import com.example.demo.Mapper.SearchMapper;
 import com.example.demo.Mapper.UserMapper;
 
 @Controller
@@ -35,19 +39,40 @@ public class BoardController {
 	private BoardMapper boardMapper;
 	@Autowired
 	private UserMapper userMapper;
+	@Autowired
+	private SearchMapper searchMapper;
     private static final Logger LOGGER  = LogManager.getLogger(BoardController.class);
 	
 	@GetMapping("/")
-	public String index(Model model,Principal pri,Authentication auth) {
-		if(auth==null) LOGGER.info("비회원 입니다.");
-		else LOGGER.info("현재 접속 계정의 아이디/권한 : "+auth.getName()+"/"+auth.getAuthorities());
+	public String index(Model model,Principal pri,Authentication auth,
+			@RequestParam(value="keyword", required=false)String keyword) {
+		List<Article> articles;
 		
+		keyword.replace(" ", "");
+		if(keyword==null || keyword.equals("")) {
+			articles = new ArrayList<Article>(boardMapper.getArticleLists(0));
+			model.addAttribute("articles",articles);
+		}		
+		else  {
+			LinkedHashSet<Article> searchedArticle = 
+					new LinkedHashSet<Article>(searchMapper.searchArticle(keyword));
+			articles = new ArrayList<Article>(searchedArticle);
+			model.addAttribute("articles",articles);
+		}
+		int articleCount = articles.size();
+		
+		if(articleCount == 0)
+			model.addAttribute("articleMSG","검색 결과가 없습니다.");
+		else
+			model.addAttribute("articleMSG","");
+		
+		if(auth==null) LOGGER.info("비회원 입니다.");
+		else LOGGER.info("현재 접속 계정의 아이디/권한 : "+auth.getName()+"/"+auth.getAuthorities());		
 		Paging p = new Paging();
 		
 		model.addAttribute("totalPageCount",
-				p.getTotalPageCount(boardMapper.getArticleCount()));
-		model.addAttribute("keword","woojin");	
-		model.addAttribute("articles",boardMapper.getArticleLists(0));
+				p.getTotalPageCount(articles.size()));
+		model.addAttribute("articleCount",articles.size());
 		
 		return "/index";
 	}
@@ -87,7 +112,7 @@ public class BoardController {
 		Article article = boardMapper.getArticle(id);
 		model.addAttribute("article",article);
 		model.addAttribute("commentCount",boardMapper.getCommentCount(id));
-		List<Comment> comments = boardMapper.getCommentLists(id,0);
+		List<Comment> comments = boardMapper.getCommentLists(id);
 		for(Comment c : comments) { 
 			if(c.getWriter_id()==0) {
 				boardMapper.DeleteArticle(c.getId());
@@ -103,6 +128,8 @@ public class BoardController {
 			session.setAttribute("userId",userMapper.getUserId(auth.getName()));
 			System.out.println(session.getAttribute("userId"));
 		}	
+		else
+			session.setAttribute("userId", 0);
 		return "/article";
 	}
 	
@@ -144,5 +171,9 @@ public class BoardController {
 		return "redirect:/article/"+id	;
 	}
 	
+	@GetMapping(value="/search")
+	public String searchArticle() {
+		return "";
+	}
 }
 

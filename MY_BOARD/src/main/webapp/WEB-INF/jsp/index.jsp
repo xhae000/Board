@@ -109,7 +109,7 @@
 
     		</div>
     	</div>
-   
+
     <div class="article-zone">
 	<c:forEach var="i" items="${articles}" varStatus="status">
 		<div class="articleBox">
@@ -145,6 +145,9 @@
         </div>
       </div>
 	</c:forEach>
+	<c:if test="${articles} == null">
+		눌이야!!!!!
+	</c:if>
 	</div>
 
 	    </div>
@@ -173,17 +176,19 @@
     <div class="bottom-cont" style="">
 			<div class="screen-bottom">
 			  <div class="page-left">
-		    	<div id="prev-btn" class="page-btn">
+		    	<div id="prev-btn" class="page-btn"> <!-- 2페이지부터 보여짐 -->
 		      		◀ 이전
 		    	</div>
-		    	<div id="first-btn" class="page-btn">
+		    	<div id="first-btn" class="page-btn"> <!--  2페이지부터 보여짐 -->
 		   		   ▲ 처음
 		   		 </div>
 		 	 </div>
 		  <div class="page-right">
+		  <c:if test="${articleCount >=30}" > <!-- 글이 30개 이상이면 보여짐 -->
 			    <div id="next-btn" class="page-btn">
 			      다음 ▶
 			    </div>
+			    </c:if>
 			  </div>
 			</div>
 	

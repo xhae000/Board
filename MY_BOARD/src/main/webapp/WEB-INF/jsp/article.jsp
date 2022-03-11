@@ -10,9 +10,8 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 	var id = ${article.id};
-	var commentCount = parseInt(${commentCount});
-
-	const nowUser = ${userId};
+	var commentCount = parseInt(${commentCount});	
+	var nowUser = nowUser!=0  ?  ${userId}  : 0;
 
 </script>
 <script src="/js/common.js" type="text/javascript"></script>

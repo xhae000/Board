@@ -22,6 +22,8 @@ $(document).ready(function(){
 	function updateComment(data){	
 		$('.comment-list').empty();
 		$('.no-comment').css('display','none');
+		commentCount = data.commentCount;
+
 		$('.commentCount').empty().append("댓글 "+data.commentCount+"개");
 		$.each(data.comments , function (index, i) {
 			var des =""+i.description

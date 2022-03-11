@@ -56,7 +56,7 @@ public class AjaxController {
 		}
 		// 댓글 등록과 동시에 댓글 업데이트		
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("comments",  boardMapper.getCommentLists(id,0));
+		map.put("comments",  boardMapper.getCommentLists(id));
 		map.put("commentCount", boardMapper.getCommentCount(id));
 		return map;
 	}
@@ -108,7 +108,7 @@ public class AjaxController {
 
 		}
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("comments",  boardMapper.getCommentLists(article_id,0));
+		map.put("comments",  boardMapper.getCommentLists(article_id));
 		map.put("commentCount", boardMapper.getCommentCount(article_id));
 		return map;	
 	}
@@ -117,17 +117,16 @@ public class AjaxController {
 	@ResponseBody
 	public String  deleteComment(@PathVariable int id, Authentication auth) {
 		String resultMSG = "";
-		
+		int article_id = boardMapper.getComment(id).getArticle_id();
+
 		if(auth!=null || boardMapper.getComment(id).getWriter_id()==userMapper.getUserId(auth.getName())) {
-			int article_id = boardMapper.getComment(id).getArticle_id();
 			if(boardMapper.isReply(id).equals("1")) {
 				boardMapper.minusArticleComment(article_id, 1);			
 				boardMapper.deleteComment(id);
 				resultMSG = "normal";
 			}else {
-				int parent_id = boardMapper.getComment(id).getParent_id();
-				
-				if (boardMapper.getCountParent(parent_id) == 1) {
+				int parent_id = boardMapper.getComment(id).getParent_id();						
+				if (boardMapper.getCountParent(parent_id, article_id) == 1) {
 					boardMapper.deleteComment(id);
 					resultMSG = "normal";
 				}

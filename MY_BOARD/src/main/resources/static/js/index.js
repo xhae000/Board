@@ -76,4 +76,13 @@
 	$('body').on('click','.writerBox',function(){
 			location.href  = "/user/"+$(this).data('writer-id');
 	});
+	
+	  $('.search-btn').click(function(){
+   		var keyword = $('.search-input').val();
+   		if(keyword.replace(' ','')==''){
+   			alert("검색어를 입력해주세요.");
+   			return;
+   		}
+   		location.href = "/?keyword="+keyword;
+   });
 });	

@@ -32,11 +32,11 @@ public interface BoardMapper {
 	  @Update("update article set see=see+1 where id=#{id}")
 	  Boolean plusSee(@Param("id") int id);
 	  
-	  @Select("select COUNT(*) from comment where article_id=#{article_id}")
+	  @Select("select COUNT(*) from comment where article_id=#{article_id} and writer_id!=0")
 	  int getCommentCount(@Param("article_id")int article_id);
 	  
-	  @Select("select * from comment where article_id=#{article_id}  order by parent_id limit #{start_num},15")
-	  List<Comment> getCommentLists(@Param("article_id")int article_id,@Param("start_num")int start_num);
+	  @Select("select * from comment where article_id=#{article_id}  order by parent_id ")
+	  List<Comment> getCommentLists(@Param("article_id")int article_id);
 	  
 	  @Insert("insert into comment(writer_id,article_id,description,writer_image,nickname,parent_id,upload_time)"+
 	  		 "values(#{comment.writer_id}, #{comment.article_id}, #{comment.description}, #{comment.writer_image}, #{comment.nickname},"
@@ -52,7 +52,7 @@ public interface BoardMapper {
 	  
 	  @Select("select likes from article where id=#{id}")
 	  int getArticleLikeCount(@Param("id")int id);
-	  
+	  	
 	  @Select("select likes from comment where id = #{id}")
 	  int getCommentLikeCount(@Param("id")int id);
 
@@ -97,8 +97,8 @@ public interface BoardMapper {
 	int getParent_id(@Param("id")int id);
 	
 
-	@Select("select count(*) from comment where parent_id=#{parent_id}")
-	int getCountParent(@Param("parent_id")int parent_id);
+	@Select("select count(*) from comment where parent_id=#{parent_id} and article_id=#{article_id}")
+	int getCountParent(@Param("parent_id")int parent_id,@Param("article_id")int article_id);
 	
 	@Update("update comment set writer_id=0,description=0,upload_time=0,likes=0,writer_image=0,"
 			+ "nickname=0 where id=#{id}")
