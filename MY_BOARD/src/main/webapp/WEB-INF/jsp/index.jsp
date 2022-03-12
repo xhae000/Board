@@ -148,23 +148,27 @@
 	<c:if test="${articles} == null">
 		눌이야!!!!!
 	</c:if>
+	${searchMSG}
 	</div>
 
 	    </div>
     <div class="screen-side">
       <div class="menuBox">
-        <div style="text-align:center;">
+        <div style="text-align:center;padding-top:20px;">
         	<sec:authorize access="isAnonymous()">
-	          <div class="signin-btn">
+	          <div class="signin-btn menu-btn">
 	            	로그인
 	          </div>
-	          <div class="signup-btn">
+	          <div class="signup-btn menu-btn">
 	             	회원가입 
 	          </div>
            	</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
-				<div class="signout-btn" onclick="location.replace('/signout')" >
+				<div class="signout-btn menu-btn" onclick="location.replace('/signout')" >
 					로그아웃
+				</div>
+				<div class="mypage-btn menu-btn" onclick="location.replace('/mypage')">
+					마이페이지
 				</div>
 			</sec:authorize>	
         </div>

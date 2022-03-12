@@ -130,77 +130,26 @@ body{
 }
 .write-btn{
   display:inline-block;
-  width:67%;
+  width:120px;
   font-size:20px;
-  padding: 2px 0px 2px 0px;
+  padding: 7px 0;
   border-radius:6px;
-  border:0.2px solid #1969FF;
-  color:#1454CD;
-  transition:0.3s;
+  background-color :#1454CD;
+  font-weight:600;
+  color:#ffffff;
 }
 
+.write-btn:hover{
+	background-color:#1043a0;
+	cursor:pointer;
+}
 
 
 .search-btn:hover{cursor:pointer;}
 .titleBox:hover{cursor:pointer;}
 .writerBox:hover{cursor:pointer;}
-.write-btn:hover{cursor:pointer;
-  background-color:#1454CD;
-  color:#ffffff; 
-}
 
 
-.signin-btn{
-    margin-right:4px;
-    margin-left:4px;
-    margin-bottom:4px;
-    margin-top:4px;
-    padding: 2px 0px 2px 0px;
-    border-radius:6px;
-    border:0.2px solid #D786D4;
-    transition:0.3s;
-
-}
-
-.signin-btn:hover{
-  background-color:#D786D4;
-  color:white;
-  cursor:pointer;
-}
-
-.signup-btn:hover{
-  background-color:#C57A7A;
-  color:white;
-  cursor:pointer;
-  
-}
-
-.signout-btn:hover{
-	background-color:red;
-	color:white;
-	cursor:pointer;
-}
-
-.signup-btn{
-      margin-right:4px;
-    margin-left:4px;
-    padding: 2px 0px 2px 0px;
-    border-radius:6px;
-    border:0.2px solid #C57A7A;
-    transition:0.3s;
-
-}
-
-.signout-btn{
-	    margin-right:4px;
-    margin-left:4px;
-    margin-bottom:4px;
-    margin-top:4px;
-    padding: 2px 0px 2px 0px;
-    border-radius:6px;
-    border:0.2px solid red;
-    transition:0.3s;
-}
 .screen-bottom{
   text-align:center;
   display:flex;
@@ -229,4 +178,46 @@ body{
 }
 #first-btn{
 	display:none;
+}
+.menu-btn{
+  display:inline-block;
+  width : 184px;
+  margin-bottom:5.1px;
+  text-align:center;
+  border-radius:7.8px;
+  padding: 15.5px 0;
+  cursor:pointer;
+  font-weight:750;
+    color:white;
+    font-size:19px;
+}
+
+.signout-btn{
+  background-color:#EA2E2E;
+
+}
+.signout-btn:hover{
+  background-color:#BD2626;
+}
+
+.signin-btn{
+  background-color:#21D082;
+}
+.signin-btn:hover{
+  background-color:#1DB973;
+}
+
+.signup-btn{
+  background-color:#27D9C2;
+}
+.signup-btn:hover{
+  background-color:#25AD9C;
+}
+
+.mypage-btn{
+  background-color:#8944DC;
+}
+
+.mypage-btn:hover{
+  background-color:#6935A7;
 }

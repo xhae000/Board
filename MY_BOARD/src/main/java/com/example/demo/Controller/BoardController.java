@@ -47,8 +47,6 @@ public class BoardController {
 	public String index(Model model,Principal pri,Authentication auth,
 			@RequestParam(value="keyword", required=false)String keyword) {
 		List<Article> articles;
-		
-		keyword.replace(" ", "");
 		if(keyword==null || keyword.equals("")) {
 			articles = new ArrayList<Article>(boardMapper.getArticleLists(0));
 			model.addAttribute("articles",articles);
@@ -62,9 +60,9 @@ public class BoardController {
 		int articleCount = articles.size();
 		
 		if(articleCount == 0)
-			model.addAttribute("articleMSG","검색 결과가 없습니다.");
+			model.addAttribute("searchMSG","<div style='text-align:center;color:#575757;padding:21.5px;'>검색 결과가 없습니다</div>.");
 		else
-			model.addAttribute("articleMSG","");
+			model.addAttribute("searchMSG","");
 		
 		if(auth==null) LOGGER.info("비회원 입니다.");
 		else LOGGER.info("현재 접속 계정의 아이디/권한 : "+auth.getName()+"/"+auth.getAuthorities());		
@@ -91,7 +89,7 @@ public class BoardController {
 			return "redirect:/";
 		
 		if(!file.isEmpty()) {
-			filename = UUID.randomUUID().toString()+"_"+FilenameUtils.getExtension(file.getOriginalFilename());
+			filename = UUID.randomUUID().toString()+"_."+FilenameUtils.getExtension(file.getOriginalFilename());
 			File newFile = new File(filename);
 			file.transferTo(newFile);
 			filename="/image/"+filename;
