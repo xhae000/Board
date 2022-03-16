@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+ 
+ $(document).ready(function(){
+	 $(".submit").click(function(){
+	  $('.alert').remove();
+	  
+	  if($("#username").val()==''){
+	    $('#username_empty').append('아이디를 입력해주세요.');
+	    return false;
+	  }
+	  else if($("#pw").val()==''){
+	    $('#pw_empty').append('비밀번호를 입력해주세요.');
+	    return false;
+	  }
+	});
+});

@@ -1,0 +1,73 @@
+package com.example.demo.Config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import com.example.demo.Validate.LoginValidator;
+
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	LoginValidator loginValidator;
+	
+    @Bean
+    public PasswordEncoder passwordEncoder() { //패스워드 암호화
+        return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
+        //인증 대상에서 제외
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http.authorizeRequests()
+                .antMatchers("/member/**").authenticated()
+                .antMatchers("/admin/**").authenticated()
+                //인증된 회원에게만
+                .antMatchers("/**").permitAll()
+        		//모든 회원에게
+        		.antMatchers("/login").anonymous();
+        		//인증되지 않은 회원에게만	]
+
+        http.formLogin()
+                .loginPage("/signin")
+                .loginProcessingUrl("/loginProcess") //폼에서 id/pw를 넘겨줄 url		
+                .defaultSuccessUrl("/")
+                .permitAll()
+                .usernameParameter("username")
+        		.passwordParameter("pw");
+
+        http.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .invalidateHttpSession(true);
+
+        http.exceptionHandling()
+                .accessDeniedPage("/denied");
+        //권한없는 사용자가 강제로 접속 시도 시
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+    	//계정을 입력받으면 loginvalidator로 넘어갈 수 있게 해줌
+        auth.userDetailsService(loginValidator);
+    }
+
+}

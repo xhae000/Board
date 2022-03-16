@@ -1,0 +1,56 @@
+package com.example.demo.Controller;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.example.demo.DTO.User;
+import com.example.demo.Mapper.UserMapper;
+
+@Controller
+public class UserController {
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	UserMapper userMapper;
+    private static final Logger LOGGER = LogManager.getLogger(UserController.class);
+
+	
+	
+	
+	@RequestMapping("/signin")
+	public String signin() {
+		return "/signin";
+	}
+	
+	@RequestMapping("/signup")
+	public String signup(User user) {
+		return "/signup";
+	}
+	
+	@RequestMapping(value="/signupProcess", method=RequestMethod.POST)
+	public String signupProcess(@ModelAttribute User user,@ModelAttribute("checkPw") String CheckPw) {
+
+		//검증 필요
+		user.setPw(passwordEncoder.encode(user.getPw()));
+		
+		userMapper.createUser(user);
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/signup_success")
+	public String signupSuccess() {
+		
+	}
+	
+	
+	@RequestMapping("/admin/home")
+	public String admin() {
+		return "/admin";
+	}
+}

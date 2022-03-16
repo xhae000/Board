@@ -1,0 +1,25 @@
+
+$(document).ready(function(){
+	$('.title').click(function(){
+		location.href="/";			
+	});
+	
+		getTime =	function(time){	
+		    var date = new Date(String(time));
+		    var nowDate = new Date();
+		
+		    var yearD = nowDate.getFullYear()-date.getFullYear();
+		    var monthD = nowDate.getMonth()-date.getMonth();
+		    var dateD = nowDate.getDate()-date.getDate();
+		    var hourD = nowDate.getHours()-date.getHours();
+		    var minuteD = nowDate.getMinutes()-date.getMinutes();
+		
+		    if(yearD==0) return String(date.getMonth()+1)+"월 "+String(date.getDate())+"일";
+		    else if(monthD==0&&dateD==0) {
+		        if(minuteD>0) return String(hourD)+"시간 전";
+		        else return String(hourD-1)+"시간 전";
+		    }
+		    else if(hourD==0) return String(minuteD)+"분 전";
+		}
+});
+

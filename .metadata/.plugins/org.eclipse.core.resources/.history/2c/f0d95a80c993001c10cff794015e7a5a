@@ -1,0 +1,31 @@
+package com.example.demo.Validate;
+
+import com.example.demo.DTO.User;
+import com.example.demo.Mapper.UserMapper;
+
+public class SignupValidator {
+	User user;
+	String checkPw;
+	UserMapper userMapper;
+	public SignupValidator(User user, String checkPw, UserMapper userMapper) {
+		this.user = user;
+		this.checkPw = checkPw;
+		this.userMapper = userMapper;
+	}
+	
+	public Boolean validate() {
+		String username = user.getNickname();
+		String pw = user.getPw();
+		String nickname = user.getNickname();
+
+		if(username==null||pw==null||checkPw==null||nickname==null)
+			return false;		
+		else if(pw!=checkPw)
+			return false;
+		else if(username.length()>32||checkPw.length()>32||nickname.length()>8)
+			return false;
+		else if(userMapper.isDuplicate(username) != null)
+			return false;
+		else return true;
+	}
+}	

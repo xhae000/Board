@@ -1,0 +1,10 @@
+$(document).ready(function(){
+		$('.signin-btn').click(function(){
+			$('.signin-popup').css('display','block');
+			$('body').css('opacity','0.3')
+		});
+		
+		 $('.signup-btn').click(function(){
+			$('.signup-popup').css('display','block');
+		});
+});
