@@ -23,7 +23,7 @@
        		 made by woojin  
       	  </div>
   	 </div>
-  	 <div style="text-align:center;">
+  	 <div style="text-align:center">
   <div class="screen-middle">
 
     <div class="content">
